@@ -1,0 +1,246 @@
+/*新建发布*/
+.el-dialog__body{
+    clear: both;
+    height: auto;
+    overflow: hidden;
+}
+.cWrap .item .el-form-item{
+    height: 42px;
+    overflow: hidden;
+}
+.radioItem .el-radio{
+    float: left;
+    margin-left: 28px;
+    margin-top: 20px;
+    margin-right: 15px;
+    color: #fff;
+}
+
+.radioItem .el-input__suffix-inner{
+    position: absolute;
+    top: 0;
+    -webkit-transition: all .3s;
+    height: 100%;
+    color: #C0C4CC;
+    text-align: center;
+    right: 5px;
+}
+
+.radioItem .radio{
+    float: left;
+}
+.item >.radioWrap .radioItem .el-form-item{
+    clear: none!important;
+    width:175px;
+    height:28px;
+    float: left;
+    margin-top: 8px;
+}
+
+.item .radioWrap .radioItem{
+    height: 44px;
+}
+.item .radioWrap .radioItem .el-form-item{
+    height: 50px;
+}
+.el-select-dropdown__list li{
+    padding-left: 10px;
+}
+
+.dateItem .el-date-table td.today span{
+    /* color: #C0C4CC!important;
+    font-weight: normal!important; */
+}
+
+/* 用来设置当前页面element全局table 选中某行时的背景色*/
+/* .table .el-table__body tr.current-row>td{
+    background-color: #f5f7fa !important;
+} */
+/* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
+/* .table .el-table--enable-row-hover .el-table__body tr:hover>td {
+    background-color: #f5f7fa;
+} 
+.trHover{
+    background-color:rgba(0,0,0,0)!important;
+}
+*/
+
+
+
+
+/* 指标看板 */
+.chartIndicator {
+  overflow-y: auto;
+  font-size: 10px;
+}
+.chartIndicator .title {
+  font-size: 1.4em;
+  padding: .8em;
+}
+.chartIndicator .content {
+  padding: 0 .71em;
+}
+.chartIndicator .content .box-card {
+  width: 33.3%;
+  padding: .36em;
+  box-sizing: border-box;
+  float: left;
+}
+.chartIndicator .content .box-card .el-card__header {
+  padding: .71em 1.07em;
+}
+.chartIndicator .content .box-card .el-card__body {
+  padding: 1.07em;
+}
+.chartIndicator .content .item {
+  margin-bottom: .71em;
+}
+.chartIndicator .content .item:last-child {
+  margin-bottom: 0;
+}
+.chartIndicator .first span:first-child {
+  display: block;
+  font-size: 1.2em;
+}
+.chartIndicator .first span:last-child {
+  display: block;
+  font-size: 1.857em;
+  color: black;
+  text-align: center;
+}
+.chartIndicator .content .item:not(.first) span:last-child {
+  float: right;
+}
+
+/* 公共title */
+.mTitle {
+  padding-left: 32px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 15px;
+  color: #fff;
+  /* border-bottom: 2px solid #3d4351; */
+  background: rgba(42, 46, 58, 0.7);
+}
+.mTitle .category {
+  display: inline-block;
+  float: right;
+}
+.mTitle .category ul {
+  padding: 0;
+}
+.mTitle .category ul li {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.mTitle .category ul li.active {
+  color: #e1cd9d;
+}
+.mTitle .category ul li:hover {
+  color: #e1cd9d;
+}
+.mTitle .category-item {
+  font-size: 14px;
+  color: #9ca5b4;
+}
+.mTitle .category-item:not(:last-child) {
+  margin-right: 12px;
+}
+.mTitle .category-item:not(:last-child) .category-box {
+  display: inline-block;
+  margin-right: 12px;
+}
+.mTitle .category-item:not(:last-child)::after {
+  display: inline-block;
+  content: "";
+  position: relative;
+  top: 2px;
+  width: 1px;
+  height: 12px;
+  background: #3d4351;
+  border-radius: 1px;
+}
+.mTitle .category-item .iconfont {
+  vertical-align: middle;
+  font-size: 16px;
+}
+.mTitle .category .category-text li {
+  position: relative;
+}
+.mTitle .category .category-text li {
+  margin-right: 0;
+  padding: 0 10px;
+}
+.mTitle .category-text li::after {
+  content: "";
+  width: 1px;
+  height: 12px;
+  background: #3D4351;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -1px;
+}
+.mTitle .category-text li:last-child::after {
+  display: none;
+}
+
+/* 公共样式：撤销、重现等 */
+.mIconOparete {
+  height: 54px;
+  text-align: center;
+  line-height: 54px !important;
+  color: #9ca5b4;
+}
+.mIconOparete span:hover {
+  color: #e1cd9d;
+}
+.mIconOparete .el-icon-logo {
+  width: 98px;
+  cursor: pointer;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.mIconOparete .el-icon-logo i {
+  font-size: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.mIconOparete .el-oparete-bar {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mIconOparete .el-oparete-bar div {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(180deg, #333846 0%, white 52%, #333846 100%);
+}
+.mIconOparete .el-page-size {
+  font-size: 10px;
+}
+
+/* 公共样式：返回、保存、发布等 */
+.mOperation {
+  font-size: 12px;
+  color: #9BA4B3;
+  display: inline-block;
+  float: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.mOperation div {
+  display: inline-block;
+  margin-left: 12px;
+}
+.mOperation div:first-child {
+  margin-left: 0;
+}
+.mOperation div i {
+  font-size: 16px;
+  vertical-align: sub;
+}
+.mOperation div i.hasPageSize {
+  margin-right: 4px;
+}

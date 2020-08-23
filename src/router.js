@@ -1,25 +1,75 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 
 Vue.use(Router)
 
+const constantRouterMap = [
+  {
+    path: '/Home',
+    name: 'Home',
+    label: '首页',
+
+    component: () => import('./views/Home.vue')
+  },
+  {
+    path: '/about',
+    name: 'about',
+    label: '首页',
+
+    component: () => import('./views/About.vue')
+  },
+  {
+    path: '/two',
+    name: 'two',
+    label: '首页',
+
+    component: () => import('./views/two.vue')
+  },
+  {
+    path: '/shizhong',
+    name: 'shizhong',
+    label: '首页',
+    component: () => import('./views/shizhong.vue')
+  },
+  {
+    path: '/three1',
+    name: 'three1',
+    label: '首页',
+    component: () => import('./views/three1.vue')
+  },
+  {
+    path: '/four',
+    name: 'four',
+    label: 'four',
+    component: () => import('./views/four.vue')
+  }
+  /* {
+		path: '/',
+		name: 'Admin',
+		label: '首页',
+		component: () => import('./views/Home.vue'),
+	},
+
+	{
+		path: '/parent',
+		name: 'parent',
+		component: () => import('./views/parent.vue'),
+	},
+	{
+		path: '/login',
+		name: 'login',
+		label: '登录',
+		component: () => import('./components/Login.vue'),
+		children: [
+			{
+				path: 'parent',
+				component: () => import('./views/parent.vue'),
+			},
+		],
+	}, */
+]
+
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
+  routes: constantRouterMap
 })
