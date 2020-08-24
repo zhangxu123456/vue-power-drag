@@ -136,7 +136,6 @@ export default {
       let target = $(e.target)
 
       let className = target.attr('class')
-      console.log(className)
       className = className || ''
       if (className.indexOf('dragHandle') == -1 && className.indexOf('item') == -1 && className.indexOf('resizeHandle') == -1) {
         return
@@ -249,7 +248,7 @@ export default {
           console.log(newX, oldX, newY, oldY)
           vm.debounce((function (newX, oldX, newY, oldY) {
             return function () {
-              if (newX != oldX || oldY != newY) {
+              if (newX !== oldX || oldY !== newY) {
                 // console.log("move");
                 vm.movePlayer(moveItem, {
                   x: newX,
@@ -336,7 +335,7 @@ export default {
             t()
             setTimeout(() => {
               this.isOverlay = false
-              if (this.lastTask != undefined) {
+              if (this.lastTask !== undefined) {
                 this.debounce(this.lastTask, this.time)
               }
             }, this.moveTime)
@@ -585,7 +584,6 @@ export default {
           }
         }
       }
-      console.log(pb)
     },
     findBelowItems (item) {
       let belowItems = {}

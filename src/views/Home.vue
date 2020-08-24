@@ -20,7 +20,7 @@ export default {
   computed: {
 
   },
-  data() {
+  data () {
     return {
       myList: [
         {
@@ -91,14 +91,14 @@ export default {
       baseHeight: 100
     }
   },
-  created() {
+  created () {
     this.baseMarginLeft = 20
     this.baseMarginTop = 20
     this.$nextTick(function () {
       $('.dragAndResize').css('width', 'calc(100% - ' + (this.baseMarginLeft) + 'px)')
     })
   },
-  mounted() {
+  mounted () {
     let gridster = this.$refs['cyGridster'] // 获取gridster实例
     gridster.init() // 在适当的时候初始化布局组件
   },
