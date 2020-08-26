@@ -245,11 +245,11 @@ export default {
           newX = newX > 0 ? newX : 1
           newY = newY > 0 ? newY : 1
           // 防抖
-          console.log(newX, oldX, newY, oldY)
           vm.debounce((function (newX, oldX, newY, oldY) {
             return function () {
+              // 改变了位置的进入
               if (newX !== oldX || oldY !== newY) {
-                // console.log("move");
+                console.log('move')
                 vm.movePlayer(moveItem, {
                   x: newX,
                   y: newY
@@ -349,7 +349,8 @@ export default {
     movePlayer (item, position) {
       let vm = this
       this.removeItemFromPositionBox(item)
-
+      console.log(item)
+      console.log(this.positionBox)
       let belowItems = this.findBelowItems(item)
 
       _.forEach(belowItems, (upItem) => {
@@ -580,13 +581,15 @@ export default {
       for (let i = item.x - 1; i < item.x - 1 + item.sizex; i++) {
         for (let j = item.y - 1; j < item.y - 1 + item.sizey; j++) {
           if (pb[j][i]) {
-            pb[j][i].el = false
+            pb[j][i].el = false // 当前拖动的这个box改为false
           }
         }
       }
     },
-    findBelowItems (item) {
+    findBelowItems (item) { // 找出底部的box
       let belowItems = {}
+      console.log(item)
+      console.log(this.positionBox)
       for (let cell = item.x - 1; cell < item.x - 1 + item.sizex; cell++) {
         for (let row = item.y - 1; row < this.positionBox.length; row++) {
           let target = this.positionBox[row][cell]
@@ -596,7 +599,7 @@ export default {
           }
         }
       }
-
+      console.log(belowItems)
       return _.sortBy(_.values(belowItems), 'y')
     },
     checkItemPosition (item, position) {
