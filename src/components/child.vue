@@ -1,14 +1,28 @@
 <template>
-    <div class='dragAndResize' ref='container' @mousedown="containerMouseDown($event)" @mouseup="endMove($event)"
-     @mousemove="moving($event)">
-        <div v-if="item.sizex!=undefined"
-            :class="{item:true,moveAnimation:moveAnimate,movingItem:item.isPlayer,canNotDrag:!draggable}"
-            @mousedown="startMove($event,item,index)" :ref="'item'+index" v-for="(item,index) in yourList"
-                :key="'item'+index" :style="nowItemStyle(item,index)">
-            {{item.id}}
-            <span class="resizeHandle" v-show="resizable" @mousedown="startResize($event,item,index)"></span>
-        </div>
+  <div
+    class="dragAndResize"
+    ref="container"
+    @mousedown="containerMouseDown($event)"
+    @mouseup="endMove($event)"
+    @mousemove="moving($event)"
+  >
+    <div
+      v-if="item.sizex!=undefined"
+      :class="{item:true,moveAnimation:moveAnimate,movingItem:item.isPlayer,canNotDrag:!draggable}"
+      @mousedown="startMove($event,item,index)"
+      :ref="'item'+index"
+      v-for="(item,index) in yourList"
+      :key="'item'+index"
+      :style="nowItemStyle(item,index)"
+    >
+      {{item.id}}
+      <span
+        class="resizeHandle"
+        v-show="resizable"
+        @mousedown="startResize($event,item,index)"
+      ></span>
     </div>
+  </div>
 </template>
 <script>
 import $ from 'jquery'
@@ -80,8 +94,7 @@ export default {
       default: function () {}
     }
   },
-  mounted () {
-  },
+  mounted () {},
   data () {
     return {
       cellWidth: '',
@@ -137,13 +150,19 @@ export default {
 
       let className = target.attr('class')
       className = className || ''
-      if (className.indexOf('dragHandle') == -1 && className.indexOf('item') == -1 && className.indexOf('resizeHandle') == -1) {
+      if (
+        className.indexOf('dragHandle') == -1 &&
+        className.indexOf('item') == -1 &&
+        className.indexOf('resizeHandle') == -1
+      ) {
         return
       }
 
       if (className.includes('resizeHandle')) {
-
-      } else if (this.draggable && (className.includes('dragHandle') || className.includes('item'))) {
+      } else if (
+        this.draggable &&
+        (className.includes('dragHandle') || className.includes('item'))
+      ) {
         this.dragStart(e, item, index)
         infoBox.moveItem = item
         infoBox.moveItemIndex = index
@@ -174,7 +193,8 @@ export default {
         let moveItem = _.get(infoBox, 'moveItem')
         let resizeItem = _.get(infoBox, 'resizeItem')
 
-        if (resizeItem) { // 调整大小时
+        if (resizeItem) {
+          // 调整大小时
           vm.resizing(e, resizeItem, resizeItem._dragId)
           vm.$set(resizeItem, 'isPlayer', true)
           let nowItemIndex = infoBox.resizeItemIndex
@@ -189,20 +209,29 @@ export default {
           let moveXSize = e.pageX - startX // X方向移动的距离
           let moveYSize = e.pageY - startY // Y方向移动的距离
 
-          let addSizex = (moveXSize) % vm.cellWidth > (vm.cellWidth / 4 * 1) ? parseInt(((moveXSize) / vm.cellWidth + 1)) : parseInt(((moveXSize) / vm.cellWidth))
-          let addSizey = (moveYSize) % vm.cellHeight > (vm.cellHeight / 4 * 1) ? parseInt(((moveYSize) / vm.cellHeight + 1)) : parseInt(((moveYSize) / vm.cellHeight))
+          let addSizex =
+            moveXSize % vm.cellWidth > (vm.cellWidth / 4) * 1
+              ? parseInt(moveXSize / vm.cellWidth + 1)
+              : parseInt(moveXSize / vm.cellWidth)
+          let addSizey =
+            moveYSize % vm.cellHeight > (vm.cellHeight / 4) * 1
+              ? parseInt(moveYSize / vm.cellHeight + 1)
+              : parseInt(moveYSize / vm.cellHeight)
 
           let nowX = oldSizeX + addSizex > 0 ? oldSizeX + addSizex : 1
           let nowY = oldSizeY + addSizey > 0 ? oldSizeY + addSizey : 1
 
-          vm.debounce((function (addSizex, addSizey) {
-            return function () {
-              vm.resizePlayer(resizeItem, {
-                sizex: nowX,
-                sizey: nowY
-              })
-            }
-          })(addSizex, addSizey), 10)
+          vm.debounce(
+            (function (addSizex, addSizey) {
+              return function () {
+                vm.resizePlayer(resizeItem, {
+                  sizex: nowX,
+                  sizey: nowY
+                })
+              }
+            })(addSizex, addSizey),
+            10
+          )
 
           let nowWidth = orignWidth + moveXSize
           nowWidth = nowWidth <= vm.baseWidth ? vm.baseWidth : nowWidth
@@ -236,8 +265,12 @@ export default {
           let nowCloneItemX = orignX + moveXSize
           let nowCloneItemY = orignY + moveYSize
           // 算出在哪一格
-          let newX = parseInt((nowCloneItemX - vm.baseMarginLeft) / vm.cellWidth + 1)
-          let newY = parseInt((nowCloneItemY - vm.baseMarginTop) / vm.cellHeight + 1)
+          let newX = parseInt(
+            (nowCloneItemX - vm.baseMarginLeft) / vm.cellWidth + 1
+          )
+          let newY = parseInt(
+            (nowCloneItemY - vm.baseMarginTop) / vm.cellHeight + 1
+          )
           // let newX = parseInt((nowCloneItemX + (cloneItem.width() / 12) - vm.baseMarginLeft) / vm.cellWidth + 1);
           // let newY = parseInt((nowCloneItemY + (cloneItem.height() / 12) - vm.baseMarginTop) / vm.cellHeight + 1);
           // console.log(newX,nowCloneItemX,cloneItem.width(),cloneItem.width() / 12,(nowCloneItemX + (cloneItem.width() / 12) - vm.baseMarginLeft) / vm.cellWidth);
@@ -245,21 +278,24 @@ export default {
           newX = newX > 0 ? newX : 1
           newY = newY > 0 ? newY : 1
           // 防抖
-          vm.debounce((function (newX, oldX, newY, oldY) {
-            return function () {
-              // 改变了位置的进入
-              if (newX !== oldX || oldY !== newY) {
-                console.log('move')
-                vm.movePlayer(moveItem, {
-                  x: newX,
-                  y: newY
-                })
+          vm.debounce(
+            (function (newX, oldX, newY, oldY) {
+              return function () {
+                // 改变了位置的进入
+                if (newX !== oldX || oldY !== newY) {
+                  console.log('move')
+                  vm.movePlayer(moveItem, {
+                    x: newX,
+                    y: newY
+                  })
 
-                infoBox.oldX = newX
-                infoBox.oldY = newY
+                  infoBox.oldX = newX
+                  infoBox.oldY = newY
+                }
               }
-            }
-          })(newX, oldX, newY, oldY), 10)
+            })(newX, oldX, newY, oldY),
+            10
+          )
 
           cloneItem.css({
             left: nowCloneItemX + 'px',
@@ -277,10 +313,20 @@ export default {
         }
         if (vm.infoBox.resizeItem) {
           vm.$delete(vm.infoBox.resizeItem, 'isPlayer')
-          vm.resizeEnd.call(null, e, vm.infoBox.resizeItem, vm.infoBox.resizeItem._dragId)
+          vm.resizeEnd.call(
+            null,
+            e,
+            vm.infoBox.resizeItem,
+            vm.infoBox.resizeItem._dragId
+          )
         }
         if (vm.infoBox.moveItem) {
-          vm.dragEnd.call(null, e, vm.infoBox.moveItem, vm.infoBox.moveItem._dragId)
+          vm.dragEnd.call(
+            null,
+            e,
+            vm.infoBox.moveItem,
+            vm.infoBox.moveItem._dragId
+          )
           vm.$set(vm.infoBox.moveItem, 'show', true)
           vm.$delete(vm.infoBox.moveItem, 'isPlayer')
         }
@@ -329,7 +375,7 @@ export default {
     },
     debounce (func, time) {
       if (!this.isOverlay) {
-        ((t) => {
+        (t => {
           this.isOverlay = true
           setTimeout(() => {
             t()
@@ -353,7 +399,7 @@ export default {
       console.log(this.positionBox)
       let belowItems = this.findBelowItems(item)
 
-      _.forEach(belowItems, (upItem) => {
+      _.forEach(belowItems, upItem => {
         let canGoUpRows = this.canItemGoUp(upItem)
         if (canGoUpRows > 0) {
           this.moveItemUp(upItem, canGoUpRows)
@@ -388,18 +434,21 @@ export default {
       this.infoBox.startY = e.pageY
     },
     init () {
+      // 盒子的宽高
       this.cellWidth = this.baseWidth + this.baseMarginLeft // 120
       this.cellHeight = this.baseHeight + this.baseMarginTop // 120
-      this.recalcCellWidth()
-      this.resetPositionBox()
+      this.recalcCellWidth() // 计算能容纳多少盒子
+      this.resetPositionBox() // 创建positionBox数组
       let i = 0
       let timeid = setInterval(() => {
+        // 数组为空进入
         if (i >= this.yourList.length) {
           clearInterval(timeid)
           // 超出yourList数组后进入
           this.$nextTick(() => {
             this.moveAnimate = true
           })
+          // 进入
         } else {
           let item = this.yourList[i]
           this.addItem(item, i)
@@ -414,12 +463,15 @@ export default {
       }
       // yourList 里面的 item
       item._dragId = index
+      // 修复超出页面宽度的盒子如何排列
       this.checkItemPosition(item, {
         x: item.x,
         y: item.y
       })
       this.emptyTargetCell(item)
       this.addItemToPositionBox(item)
+      console.log(this.positionBox)
+      debugger
       let canGoUpRows = this.canItemGoUp(item)
       if (canGoUpRows > 0) {
         this.moveItemUp(item, canGoUpRows)
@@ -503,8 +555,8 @@ export default {
     },
     changeItemCoord (item) {
       let vm = this
-      let width = this.cellWidth * (item.sizex) - this.baseMarginLeft
-      let height = this.cellHeight * (item.sizey) - this.baseMarginTop
+      let width = this.cellWidth * item.sizex - this.baseMarginLeft
+      let height = this.cellHeight * item.sizey - this.baseMarginTop
       let left = this.cellWidth * (item.x - 1) + this.baseMarginLeft
       let top = this.cellHeight * (item.y - 1) + this.baseMarginTop
 
@@ -530,12 +582,13 @@ export default {
      *
      * @param {any} item
      */
+    // 根据盒子的大小距离来填充数组的值
     addItemToPositionBox (item) {
       let pb = this.positionBox
       if (item.x <= 0 || item.y <= 0) return
-
       for (let i = item.x - 1; i < item.x - 1 + item.sizex; i++) {
         for (let j = item.y - 1; j < item.y - 1 + item.sizey; j++) {
+          console.log(pb[j][i])
           if (pb[j][i]) {
             pb[j][i].el = item
           }
@@ -586,10 +639,9 @@ export default {
         }
       }
     },
-    findBelowItems (item) { // 找出底部的box
+    findBelowItems (item) {
+      // 找出底部的box
       let belowItems = {}
-      console.log(item)
-      console.log(this.positionBox)
       for (let cell = item.x - 1; cell < item.x - 1 + item.sizex; cell++) {
         for (let row = item.y - 1; row < this.positionBox.length; row++) {
           let target = this.positionBox[row][cell]
@@ -599,7 +651,6 @@ export default {
           }
         }
       }
-      console.log(belowItems)
       return _.sortBy(_.values(belowItems), 'y')
     },
     checkItemPosition (item, position) {
@@ -631,14 +682,20 @@ export default {
       if (item.sizey < 1) {
         item.sizey = 1
       }
+      /* console.log(item, this.itemMaxY)
+      debugger */
+      // 盒子的距离顶部的高度
       if (item.y + item.sizey > this.itemMaxY - 1) {
+        // 看最高盒子高度多少列,再增加3列,push进去空数组
         this.fillPositionBox(item.y + item.sizey - 1)
       }
     },
+    // 看最高盒子高度多少列,再增加3列
     fillPositionBox (maxY) {
       let pb = this.positionBox // 二维数组 里面是push 的 row
       maxY += 2
-      for (let j = 0; j < maxY; j++) { // 这里循环是差不多组数组补多少数组
+      for (let j = 0; j < maxY; j++) {
+        // maxY = 4 // 这里循环是差不多组数组补多少数组
         if (pb[j] == undefined) {
           let row = []
           for (let i = 0; i < this.itemMaxX; i++) {
@@ -651,7 +708,7 @@ export default {
       }
       this.itemMaxY = maxY
       // box高度多3个
-      $(this.$el).css('height', ((this.itemMaxY + 2) * this.cellHeight) + 'px')
+      $(this.$el).css('height', (this.itemMaxY + 2) * this.cellHeight + 'px')
       /* $(this.$el).css("backgroundColor", 'red'); */
     },
     /**
@@ -671,6 +728,7 @@ export default {
       }
     },
     recalcCellWidth () {
+      // 计算能容纳多少盒子
       let containerNode = this.$refs['container']
       let containerWidth = containerNode.offsetWidth // 1920
       let cells = Math.round(containerWidth / this.cellWidth) // 16
@@ -678,21 +736,17 @@ export default {
     },
     nowItemStyle (item, index) {
       return {
-        width: (this.cellWidth * (item.sizex) - this.baseMarginLeft) + 'px',
-        height: (this.cellHeight * (item.sizey) - this.baseMarginTop) + 'px',
-        left: (this.cellWidth * (item.x - 1) + this.baseMarginLeft) + 'px',
-        top: (this.cellHeight * (item.y - 1) + this.baseMarginTop) + 'px'
+        width: this.cellWidth * item.sizex - this.baseMarginLeft + 'px',
+        height: this.cellHeight * item.sizey - this.baseMarginTop + 'px',
+        left: this.cellWidth * (item.x - 1) + this.baseMarginLeft + 'px',
+        top: this.cellHeight * (item.y - 1) + this.baseMarginTop + 'px'
       }
     },
-    endMove (e) {
-
-    },
-    moving (e) {
-
-    }
+    endMove (e) {},
+    moving (e) {}
   }
 }
 </script>
 <style lang="scss">
-    @import "./drag.scss";
+@import "./drag.scss";
 </style>
